@@ -78,13 +78,13 @@ for d in dates.index:
             day_name = dates[M][d][1]
 
             if M == 1:
-                day_row = day_row + '\t \\numberDay{%i}' % (d) + ' & \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s}' % (lunation, day_name) + ' &'
+                day_row = day_row + '\t \\numberDay{%i}' % (d) + ' & \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
                 calc = calc + '\t %i.' % (d) + ' & %i-%i-%i' % (Y,M,d) + ' &'
             elif M == 12:
-                day_row = day_row + '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s}' % (lunation, day_name) + '\t & \\numberDay{%i}' % (d) + '\\\\ \n'
+                day_row = day_row + '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} \t & \\numberDay{%i} \\\\ \n' % (lunation, day_name, d)
                 calc = calc + '\t & %i.' % (d) + '\\\\ \n'
             else:
-                day_row = day_row + '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s}' % (lunation, day_name) + ' &'
+                day_row = day_row + '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
                 calc = calc + '\t %i-%i-%i' % (Y,M,d) + ' &'
 
 
