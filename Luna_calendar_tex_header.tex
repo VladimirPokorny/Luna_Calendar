@@ -1,0 +1,90 @@
+\documentclass[border=40mm, 10pt, varwidth=true, varwidth=610mm]{standalone}
+
+\usepackage[pass, paperwidth=594mm]{geometry}
+
+
+\usepackage{tikz}
+\usetikzlibrary{calendar, fpu}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{lmodern}
+
+\renewcommand\tabularxcolumn[1]{m{#1}}% for vertical centering text in X column
+
+\tikzset{
+    moon colour/.style={
+        moon fill/.style={
+            fill=#1
+        }
+    },
+    sky colour/.style={
+        sky draw/.style={
+            draw=#1
+        },
+        sky fill/.style={
+            fill=#1
+        }
+    },
+    southern hemisphere/.style={
+        rotate=180
+    }
+}
+
+\makeatletter
+\pgfcalendardatetojulian{2022-01-02}{\c@pgf@counta}
+\def\synodicmonth{29.530588853}
+
+\newcommand{\numberDay}[1]{%
+    \tikzset{red/.style={rectangle, draw=white, fill= white , minimum width = 5pt, minimum height=\moonsize em}}
+    \begin{tikzpicture}
+        \node[red](r1){\Huge{#1.}};
+    \end{tikzpicture}
+    }
+
+\newcommand{\moon}[3][]{%
+    \edef\checkfordate{\noexpand\in@{-}{#2}}%
+    \checkfordate%
+    \ifin@%
+        \pgfcalendardatetojulian{#2}{\c@pgf@countb}%
+        \pgfkeys{/pgf/fpu=true,/pgf/fpu/output format=fixed}%
+        \pgfmathsetmacro\dayssincenewmoon{\the\c@pgf@countb-\the\c@pgf@counta-(7/24+11/(24*60))}%
+        \pgfmathsetmacro\lunarage{mod(\dayssincenewmoon,\synodicmonth)}
+        \pgfkeys{/pgf/fpu=false}%%
+    \else%
+        \def\lunarage{#2}%
+    \fi%
+    \pgfmathsetmacro\leftside{ifthenelse(\lunarage<=\synodicmonth/2,cos(360*(\lunarage/\synodicmonth)),1)}%
+    \pgfmathsetmacro\rightside{ifthenelse(\lunarage<=\synodicmonth/2,-1,-cos(360*(\lunarage/\synodicmonth))}%
+    \tikz [moon colour=white,sky colour=black,#1]{
+        \draw [moon fill, sky draw] (0,0) circle [radius=1ex];
+        \draw [sky draw, sky fill] (0,1ex)
+            arc (90:-90:\rightside ex and 1ex)
+            arc (-90:90:\leftside ex and 1ex)
+            -- cycle;
+        \draw [white] (0,0) circle [radius=1.2ex];
+        \node at (-1ex,1ex) {#3};
+    }%
+}
+
+% fáze měsíce
+\newcommand{\newmoon}{\moon{0}}
+
+\newcommand{\moonsize}{9}
+\newcommand{\skycolour}{black!70}
+
+%\renewcommand\Huge{\fontsize{50pt}{60pt}\selectfont}
+
+
+\begin{document}
+
+\begin{tabular}{c}
+    \fontsize{140}{120}\selectfont LunaCalendar 2024 \vspace{1cm} \\
+    \multicolumn{1}{c}{\large{By Vladimír Pokorný $\copyright$}} \\
+    \vspace{1cm}\\ \hline
+    \vspace{1cm}\\
+    \input{body.tex}
+
+\end{tabular}
+
+\end{document}
