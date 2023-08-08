@@ -10,11 +10,12 @@ Installed LaTeX distribution:
 - MacOS: https://www.tug.org/mactex/
 
 ## Usage
-1.  install and activate virtual environment: 
-    - Install venv: `python -m venv \.venv\`
-    - Run the virtual environment by: `.venv\Scripts\activate`
-    - Install necessary packages: `pip install -r requirements.txt`
-2. run 
+1. install and activate virtual environment: 
+    - install venv: `python -m venv \.venv\`
+    - run the virtual environment by: `.venv\Scripts\activate`
+    - install necessary packages: `pip install -r requirements.txt`
+2. run `python main.py -y YEAR` where flag -y points to YEAR which is an integer of calendar year
+    - When the year is not pass with -y flag, the actual year is used instead of it.
 
 
 

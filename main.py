@@ -3,9 +3,17 @@ import datetime
 import ephem
 import pandas as pd
 import os
+import sys
 
 
-Y = 2024
+arguments = sys.argv
+
+try: 
+    year_index = arguments.index('-y')
+    Y = int(arguments[year_index + 1])
+
+except ValueError:
+    Y = datetime.datetime.now().year
 
 
 def get_moon_phase(date: datetime.date) -> float:
@@ -29,7 +37,7 @@ def get_moon_phase(date: datetime.date) -> float:
 
     return day_after_new_moon
 
-def create_calendar(Y: int) -> pd.DataFrame:
+def create_calendar_table(Y: int) -> pd.DataFrame:
     """
     Create a calendar for a given year.
 
@@ -37,10 +45,10 @@ def create_calendar(Y: int) -> pd.DataFrame:
         Y (int): year of the calendar
         
     Returns:
-        dates (pd.DataFrame): calendar of the year
+        calendar_dates (pd.DataFrame): calendar of the year
     """
     months = [M for M in range(1, 13)]
-    dates = pd.DataFrame(columns = months)
+    calendar_dates = pd.DataFrame(columns = months)
 
     for M in months:
         max_month_day = calendar.monthrange(Y, M)[1]
@@ -50,11 +58,15 @@ def create_calendar(Y: int) -> pd.DataFrame:
             day_name_string = calendar.day_abbr[day_name_number]
             lunation = get_moon_phase(date)
 
-            dates.at[d, M] = [date, day_name_string, lunation]
+            calendar_dates.at[d, M] = [date, day_name_string, lunation]
     
-    return dates
+    return calendar_dates
 
-dates = create_calendar(Y)
+def create_tex_header(Y: int) -> str:
+    pass
+
+
+dates = create_calendar_table(Y)
 
 day_row = '\\begin{tabular}{cccccccccccccc} \n'
 
