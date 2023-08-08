@@ -3,6 +3,10 @@ import datetime
 import ephem
 import pandas as pd
 import os
+import sys
+
+
+print(sys.argv)
 
 
 Y = 2024
