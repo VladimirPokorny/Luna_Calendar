@@ -17,5 +17,12 @@ Installed LaTeX distribution:
 2. run `python main.py -y YEAR` where flag -y points to YEAR which is an integer of calendar year
     - When the year is not pass with -y flag, the actual year is used instead of it.
 
+## Output
+You can view [Output PDF](Luna_calendar_tex_header.pdf) or you can look at the png preview:
+
+![Generated Luna Calendar as png](LunaCalendar.png)
+
+
+
 
 
