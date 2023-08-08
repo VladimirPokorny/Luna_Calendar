@@ -6,11 +6,10 @@ import os
 import sys
 
 
-print(sys.argv)
+arguments = sys.argv
+year_index = arguments.index('-y')
 
-
-Y = 2024
-
+Y = int(arguments[year_index + 1])
 
 def get_moon_phase(date: datetime.date) -> float:
     """
@@ -98,4 +97,4 @@ with open('body.tex','w', encoding="utf-8") as file:
     file.write(day_row)
     file.close()
 
-os.system('pdflatex Luna_calendar_tex_header.tex')
+# os.system('pdflatex Luna_calendar_tex_header.tex')
