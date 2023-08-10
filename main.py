@@ -73,8 +73,7 @@ day_row = '\\begin{tabular}{cccccccccccccc} \n'
 for M in dates.columns:
     day_row = day_row + '\t& \Huge{%s}' % (calendar.month_name[M])
 
-day_row += '\\\\'
-day_row += ' &&&&&&&&&&&& \\\\ \n'
+day_row += '\\\\ &&&&&&&&&&&& \\\\ \n'
 
 calc = '\\begin{tabular}{cccccccccccccc} \n'
 
@@ -90,15 +89,16 @@ for d in dates.index:
             day_name = dates[M][d][1]
 
             if M == 1:
-                day_row += '\t \\numberDay{%i}' % (d) + ' & \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
-                calc = calc + '\t %i.' % (d) + ' & %i-%i-%i' % (Y,M,d) + ' &'
+                day_row += '\t \\numberDay{%i} &' % (d)
+                day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
+                calc = calc + '\t %i.' % (d) + ' & %i-%i-%i' % (Y, M, d) + ' &'
             elif M == 12:
-                day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} \t & \\numberDay{%i} \\\\ \n' % (lunation, day_name, d)
-                calc += '\t & %i.' % (d) + '\\\\ \n'
+                day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} \t &' % (lunation, day_name)
+                day_row += '\\numberDay{%i} \\\\ \n' % (d)
+                calc += '\t & %i. \\\\ \n' % (d)
             else:
                 day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
-                calc += '\t %i-%i-%i' % (Y,M,d) + ' &'
-
+                calc += '\t %i-%i-%i &' % (Y, M, d)
 
 day_row += '\end{tabular} \n \\vspace{2em}'
 
