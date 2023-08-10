@@ -25,7 +25,7 @@ python main.py -y 2024
 Upper code creates the TeX source file and compiles it by `pdflatex` to the below pdf:
 
 ## Output
-You can view [Output PDF](Luna_calendar_tex_header.pdf) or you can look at the png preview:
+View [Output PDF](Luna_calendar_tex_header.pdf) or take a look to the png preview:
 
 ![Generated Luna Calendar as png](images/LunaCalendar.png)
 
