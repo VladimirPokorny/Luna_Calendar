@@ -102,7 +102,7 @@ for d in dates.index:
 
 day_row += '\end{tabular} \n \\vspace{2em}'
 
-with open('body.tex','w', encoding="utf-8") as file:
+with open('LaTeX_files/body.tex','w', encoding="utf-8") as file:
     file.write(day_row)
     file.close()
 

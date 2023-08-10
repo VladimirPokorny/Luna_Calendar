@@ -3,6 +3,8 @@ venv/
 .idea/
 __pycache__/
 
+LaTeX_files/*.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -24,3 +26,5 @@ __pycache__/
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+
+

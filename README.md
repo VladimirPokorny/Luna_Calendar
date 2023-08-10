@@ -20,7 +20,7 @@ Installed LaTeX distribution:
 ## Output
 You can view [Output PDF](Luna_calendar_tex_header.pdf) or you can look at the png preview:
 
-![Generated Luna Calendar as png](LunaCalendar.png)
+![Generated Luna Calendar as png](images/LunaCalendar.png)
 
 
 
