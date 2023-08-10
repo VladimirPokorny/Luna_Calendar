@@ -3,9 +3,17 @@ import datetime
 import ephem
 import pandas as pd
 import os
+import sys
 
 
-Y = 2024
+arguments = sys.argv
+
+try: 
+    year_index = arguments.index('-y')
+    Y = int(arguments[year_index + 1])
+
+except ValueError:
+    Y = datetime.datetime.now().year
 
 
 def get_moon_phase(date: datetime.date) -> float:
@@ -29,7 +37,7 @@ def get_moon_phase(date: datetime.date) -> float:
 
     return day_after_new_moon
 
-def create_calendar(Y: int) -> pd.DataFrame:
+def create_calendar_table(Y: int) -> pd.DataFrame:
     """
     Create a calendar for a given year.
 
@@ -37,10 +45,10 @@ def create_calendar(Y: int) -> pd.DataFrame:
         Y (int): year of the calendar
         
     Returns:
-        dates (pd.DataFrame): calendar of the year
+        calendar_dates (pd.DataFrame): calendar of the year
     """
     months = [M for M in range(1, 13)]
-    dates = pd.DataFrame(columns = months)
+    calendar_dates = pd.DataFrame(columns = months)
 
     for M in months:
         max_month_day = calendar.monthrange(Y, M)[1]
@@ -50,19 +58,22 @@ def create_calendar(Y: int) -> pd.DataFrame:
             day_name_string = calendar.day_abbr[day_name_number]
             lunation = get_moon_phase(date)
 
-            dates.at[d, M] = [date, day_name_string, lunation]
+            calendar_dates.at[d, M] = [date, day_name_string, lunation]
     
-    return dates
+    return calendar_dates
 
-dates = create_calendar(Y)
+def create_tex_header(Y: int) -> str:
+    pass
+
+
+dates = create_calendar_table(Y)
 
 day_row = '\\begin{tabular}{cccccccccccccc} \n'
 
 for M in dates.columns:
     day_row = day_row + '\t& \Huge{%s}' % (calendar.month_name[M])
 
-day_row = day_row + '\\\\'
-day_row = day_row + ' &&&&&&&&&&&& \\\\ \n'
+day_row += '\\\\ &&&&&&&&&&&& \\\\ \n'
 
 calc = '\\begin{tabular}{cccccccccccccc} \n'
 
@@ -70,28 +81,29 @@ for d in dates.index:
     for M in dates.columns:
         
         if str(dates[M][d]) == 'nan':
-            day_row = day_row + '\t& '
-            calc = calc + '\t& '
+            day_row += '\t& '
+            calc +='\t& '
 
         else:
             lunation = dates[M][d][2]
             day_name = dates[M][d][1]
 
             if M == 1:
-                day_row = day_row + '\t \\numberDay{%i}' % (d) + ' & \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
-                calc = calc + '\t %i.' % (d) + ' & %i-%i-%i' % (Y,M,d) + ' &'
+                day_row += '\t \\numberDay{%i} &' % (d)
+                day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
+                calc = calc + '\t %i.' % (d) + ' & %i-%i-%i' % (Y, M, d) + ' &'
             elif M == 12:
-                day_row = day_row + '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} \t & \\numberDay{%i} \\\\ \n' % (lunation, day_name, d)
-                calc = calc + '\t & %i.' % (d) + '\\\\ \n'
+                day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} \t &' % (lunation, day_name)
+                day_row += '\\numberDay{%i} \\\\ \n' % (d)
+                calc += '\t & %i. \\\\ \n' % (d)
             else:
-                day_row = day_row + '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
-                calc = calc + '\t %i-%i-%i' % (Y,M,d) + ' &'
+                day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
+                calc += '\t %i-%i-%i &' % (Y, M, d)
 
+day_row += '\end{tabular} \n \\vspace{2em}'
 
-day_row = day_row + '\end{tabular} \n \\vspace{2em}'
-
-with open('body.tex','w', encoding="utf-8") as file:
+with open('LaTeX_files/body.tex','w', encoding="utf-8") as file:
     file.write(day_row)
     file.close()
 
-os.system('pdflatex Luna_calendar_tex_header.tex')
+os.system('pdflatex -halt-on-error -output-directory . LaTeX_files/Luna_calendar_tex_header.tex')

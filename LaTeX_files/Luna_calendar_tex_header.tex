@@ -5,12 +5,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{calendar, fpu}
-\usepackage{tabularx}
-\usepackage{array}
-\usepackage{booktabs}
 \usepackage{lmodern}
-
-\renewcommand\tabularxcolumn[1]{m{#1}}% for vertical centering text in X column
 
 \tikzset{
     moon colour/.style={
@@ -67,14 +62,8 @@
     }%
 }
 
-% fáze měsíce
-\newcommand{\newmoon}{\moon{0}}
-
 \newcommand{\moonsize}{9}
 \newcommand{\skycolour}{black!70}
-
-%\renewcommand\Huge{\fontsize{50pt}{60pt}\selectfont}
-
 
 \begin{document}
 
@@ -83,7 +72,7 @@
     \multicolumn{1}{c}{\large{By Vladimír Pokorný $\copyright$}} \\
     \vspace{1cm}\\ \hline
     \vspace{1cm}\\
-    \input{body.tex}
+    \input{LaTeX_files/body.tex}
 
 \end{tabular}
 
