@@ -73,8 +73,8 @@ day_row = '\\begin{tabular}{cccccccccccccc} \n'
 for M in dates.columns:
     day_row = day_row + '\t& \Huge{%s}' % (calendar.month_name[M])
 
-day_row = day_row + '\\\\'
-day_row = day_row + ' &&&&&&&&&&&& \\\\ \n'
+day_row += '\\\\'
+day_row += ' &&&&&&&&&&&& \\\\ \n'
 
 calc = '\\begin{tabular}{cccccccccccccc} \n'
 
@@ -82,25 +82,25 @@ for d in dates.index:
     for M in dates.columns:
         
         if str(dates[M][d]) == 'nan':
-            day_row = day_row + '\t& '
-            calc = calc + '\t& '
+            day_row += '\t& '
+            calc +='\t& '
 
         else:
             lunation = dates[M][d][2]
             day_name = dates[M][d][1]
 
             if M == 1:
-                day_row = day_row + '\t \\numberDay{%i}' % (d) + ' & \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
+                day_row += '\t \\numberDay{%i}' % (d) + ' & \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
                 calc = calc + '\t %i.' % (d) + ' & %i-%i-%i' % (Y,M,d) + ' &'
             elif M == 12:
-                day_row = day_row + '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} \t & \\numberDay{%i} \\\\ \n' % (lunation, day_name, d)
-                calc = calc + '\t & %i.' % (d) + '\\\\ \n'
+                day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} \t & \\numberDay{%i} \\\\ \n' % (lunation, day_name, d)
+                calc += '\t & %i.' % (d) + '\\\\ \n'
             else:
-                day_row = day_row + '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
-                calc = calc + '\t %i-%i-%i' % (Y,M,d) + ' &'
+                day_row += '\t \moon[scale=\moonsize, sky colour=\skycolour]{%f}{%s} &' % (lunation, day_name)
+                calc += '\t %i-%i-%i' % (Y,M,d) + ' &'
 
 
-day_row = day_row + '\end{tabular} \n \\vspace{2em}'
+day_row += '\end{tabular} \n \\vspace{2em}'
 
 with open('body.tex','w', encoding="utf-8") as file:
     file.write(day_row)
