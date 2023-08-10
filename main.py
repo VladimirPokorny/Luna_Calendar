@@ -84,7 +84,6 @@ for d in dates.index:
             day_row += '\t& '
             calc +='\t& '
 
-
         else:
             lunation = dates[M][d][2]
             day_name = dates[M][d][1]
