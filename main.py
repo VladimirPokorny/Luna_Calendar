@@ -106,4 +106,4 @@ with open('body.tex','w', encoding="utf-8") as file:
     file.write(day_row)
     file.close()
 
-os.system('pdflatex Luna_calendar_tex_header.tex')
+os.system('pdflatex -halt-on-error -output-directory . LaTeX_files/Luna_calendar_tex_header.tex')
