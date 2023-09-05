@@ -65,8 +65,15 @@ def create_calendar_table(Y: int) -> pd.DataFrame:
 def create_tex_header(Y: int) -> str:
     pass
 
+def year_to_tex(year: int) -> str:
+    with open('LaTeX_files/YEAR.tex', 'w', encoding="utf-8") as file:
+        file.write(str(year))
+        file.close()
+
+
 
 dates = create_calendar_table(Y)
+year_to_tex(Y)
 
 day_row = '\\begin{tabular}{cccccccccccccc} \n'
 

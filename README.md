@@ -12,7 +12,9 @@ Installed LaTeX distribution:
 ## Usage
 1. install and activate virtual environment: 
     - install venv: `python -m venv \.venv\`
-    - run the virtual environment by: `.venv\Scripts\activate`
+    - run the virtual environment:
+        - for Unix: `source .venv\bin\activate`
+        - for Windows:`.venv\Scripts\activate`
     - install necessary packages: `pip install -r requirements.txt`
 2. run `python main.py -y YEAR` where flag -y points to YEAR which is an integer of calendar year
     - When the year is not pass with -y flag, the actual year is used instead of it.
