@@ -2,6 +2,7 @@
 venv/
 .idea/
 __pycache__/
+.vscode/
 
 LaTeX_files/*.pdf
 
